@@ -1,0 +1,98 @@
+﻿@model Frelsex.Models.Spedizione
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Spedizione</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IDCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroIdentificativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroIdentificativo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataSpedizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataSpedizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Peso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Peso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CittàDestinataria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CittàDestinataria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IndirizzoDestinatario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IndirizzoDestinatario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NominativoDestinatario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NominativoDestinatario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CostoSpedizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CostoSpedizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataConsegnaPrevista)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataConsegnaPrevista)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stato)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

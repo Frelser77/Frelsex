@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Frelsex.Models.Cliente>
+
+@{
+    ViewBag.Title = "Index";
+    var clientiPrivati = Model.Where(c => !c.IsAzienda).ToList();
+    var aziende = Model.Where(c => c.IsAzienda).ToList();
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@if (clientiPrivati.Any())
+{
+    <h3>Clienti Privati</h3>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.CodiceFiscale)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in clientiPrivati)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.CodiceFiscale)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@if (aziende.Any())
+{
+    <h3>Aziende</h3>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.PartitaIVA)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in aziende)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.PartitaIVA)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@if (!clientiPrivati.Any() && !aziende.Any())
+{
+    <p>Non ci sono clienti da mostrare.</p>
+}

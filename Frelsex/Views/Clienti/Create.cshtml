@@ -1,0 +1,65 @@
+﻿@model Frelsex.Models.Cliente
+
+@{
+    ViewBag.Title = "Registra Cliente";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="tipoCliente">Tipo Cliente</label>
+        <select id="tipoCliente" class="form-control">
+            <option value="">Seleziona Tipo Cliente</option>
+            <option value="false">Privato</option>
+            <option value="true">Azienda</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="nomeClienteDiv" style="display:none">
+        @Html.LabelFor(model => model.Nome)
+        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome Cliente/Azienda" } })
+        @Html.ValidationMessageFor(model => model.Nome)
+    </div>
+
+    <div class="form-group" id="codiceFiscaleDiv" style="display:none">
+        @Html.LabelFor(model => model.CodiceFiscale)
+        @Html.EditorFor(model => model.CodiceFiscale, new { htmlAttributes = new { @class = "form-control", placeholder = "Codice Fiscale" } })
+        @Html.ValidationMessageFor(model => model.CodiceFiscale)
+    </div>
+
+    <div class="form-group" id="partitaIVADiv" style="display:none">
+        @Html.LabelFor(model => model.PartitaIVA)
+        @Html.EditorFor(model => model.PartitaIVA, new { htmlAttributes = new { @class = "form-control", placeholder = "Partita IVA" } })
+        @Html.ValidationMessageFor(model => model.PartitaIVA)
+    </div>
+
+    @Html.HiddenFor(model => model.IsAzienda) @* Campo nascosto per inviare il valore del tipo di cliente *@
+
+    <button type="submit" class="btn btn-default">Registra</button>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var tipoClienteSelect = document.getElementById('tipoCliente');
+            var nomeClienteDiv = document.getElementById('nomeClienteDiv');
+            var codiceFiscaleDiv = document.getElementById('codiceFiscaleDiv');
+            var partitaIVADiv = document.getElementById('partitaIVADiv');
+            var isAziendaField = document.getElementById('IsAzienda');
+
+            tipoClienteSelect.addEventListener('change', function () {
+                var selectedValue = this.value;
+                var isAzienda = selectedValue === "true";
+                isAziendaField.value = isAzienda;
+
+                nomeClienteDiv.style.display = 'block'; 
+                codiceFiscaleDiv.style.display = isAzienda ? 'none' : 'block'; 
+                partitaIVADiv.style.display = isAzienda ? 'block' : 'none';
+            });
+        });
+    </script>
+}

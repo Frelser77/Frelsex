@@ -1,0 +1,58 @@
+﻿@model Frelsex.Models.AggiornamentoSpedizione
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AggiornamentoSpedizione</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IDSpedizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDSpedizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Luogo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Luogo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataOraAggiornamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataOraAggiornamento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

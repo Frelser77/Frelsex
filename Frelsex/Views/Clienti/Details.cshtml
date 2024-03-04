@@ -1,0 +1,50 @@
+﻿@model Frelsex.Models.Cliente
+
+@{
+    ViewBag.Title = "Dettagli Cliente";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        @if (!Model.IsAzienda)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.CodiceFiscale)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CodiceFiscale)
+            </dd>
+        }
+        else
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.PartitaIVA)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PartitaIVA)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAzienda)
+        </dt>
+        <dd>
+            @(Model.IsAzienda ? "Aziendale" : "Privato")
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modifica", "Edit", new { id = Model.ID }, new {@class="btn btn-sm btn-outline-success mb-3"}) 
+    @Html.ActionLink("Torna alla lista", "Index", null, new {@class="nav-link"})
+</p>
