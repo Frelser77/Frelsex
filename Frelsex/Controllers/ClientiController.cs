@@ -30,18 +30,23 @@ namespace Frelsex.Controllers
             }
             return View(cliente);
         }
-
+        /*
+        [NonAction]
         // GET: Clienti/Create
         public ActionResult Create()
         {
-            return View();
+
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La creazione non è permessa da qui.");
         }
+        */
 
         // POST: Clienti/Create
+        [NonAction]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nome,CodiceFiscale,PartitaIVA,IsAzienda")] Cliente cliente)
         {
+
             if (ModelState.IsValid)
             {
                 db.Clienti.Add(cliente);
@@ -50,7 +55,10 @@ namespace Frelsex.Controllers
             }
 
             return View(cliente);
+
+            /*return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La creazione non è permessa da qui.");*/
         }
+
 
         // GET: Clienti/Edit/5
         public ActionResult Edit(int? id)

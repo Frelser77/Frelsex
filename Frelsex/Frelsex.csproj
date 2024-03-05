@@ -130,7 +130,9 @@
     <Compile Include="Controllers\AggiornamentiSpedizioneController.cs" />
     <Compile Include="Controllers\ClientiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RegistrazioneController.cs" />
     <Compile Include="Controllers\SpedizioniController.cs" />
+    <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -146,11 +148,24 @@
     <Compile Include="Migrations\202403041542263_UpdateSchemaAfterChanges.designer.cs">
       <DependentUpon>202403041542263_UpdateSchemaAfterChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403051213485_AdjustUserClienteRelationship.cs" />
+    <Compile Include="Migrations\202403051213485_AdjustUserClienteRelationship.designer.cs">
+      <DependentUpon>202403051213485_AdjustUserClienteRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403051546570_Update.cs" />
+    <Compile Include="Migrations\202403051546570_Update.designer.cs">
+      <DependentUpon>202403051546570_Update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AggiornamentoSpedizione.cs" />
     <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\ClienteUtenteViewModel.cs" />
     <Compile Include="Models\FrelsexDbContext.cs" />
+    <Compile Include="Models\MyRole.cs" />
+    <Compile Include="Models\Ruolo.cs" />
     <Compile Include="Models\Spedizione.cs" />
+    <Compile Include="Models\Utente.cs" />
+    <Compile Include="Models\UtenteRuolo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +234,10 @@
     <Content Include="Views\Clienti\Index.cshtml" />
     <Content Include="Views\Clienti\Details.cshtml" />
     <Content Include="Views\Clienti\Edit.cshtml" />
+    <Content Include="Views\Registrazione\Create.cshtml" />
+    <Content Include="Views\Utenti\Index.cshtml" />
+    <Content Include="Views\Utenti\Details.cshtml" />
+    <Content Include="Views\Utenti\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -259,6 +278,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403041542263_UpdateSchemaAfterChanges.resx">
       <DependentUpon>202403041542263_UpdateSchemaAfterChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403051213485_AdjustUserClienteRelationship.resx">
+      <DependentUpon>202403051213485_AdjustUserClienteRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403051546570_Update.resx">
+      <DependentUpon>202403051546570_Update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

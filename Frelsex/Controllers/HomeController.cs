@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Frelsex.Models;
 using System.Web.Mvc;
 
 namespace Frelsex.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public readonly MyRole roleProvider = new MyRole();
+        public ActionResult Index(string username)
         {
+            var roles = roleProvider.GetRolesForUser(username);
+            if (roles == null)
+            {
+                TempData["ErrorMessage"] = "Si è verificato un errore durante il recupero dei ruoli dell'utente.";
+            }
             return View();
         }
 

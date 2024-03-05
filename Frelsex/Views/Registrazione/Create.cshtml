@@ -1,18 +1,25 @@
-﻿@model Frelsex.Models.Cliente
+﻿@model Frelsex.Models.ClienteUtenteViewModel
 
 @{
-    ViewBag.Title = "Registra Cliente";
+    ViewBag.Title = "Registra Cliente e Utente";
 }
+
+ @if (TempData["ErrorMessage"] != null)
+ {
+<div class="alert alert-danger">
+    @TempData["ErrorMessage"]
+</div>
+ }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Registrazione", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-group">
         <label for="tipoCliente">Tipo Cliente</label>
-        <select id="tipoCliente" class="form-control">
+        <select id="tipoCliente" name="IsAzienda" class="form-control">
             <option value="">Seleziona Tipo Cliente</option>
             <option value="false">Privato</option>
             <option value="true">Azienda</option>
@@ -37,7 +44,27 @@
         @Html.ValidationMessageFor(model => model.PartitaIVA)
     </div>
 
-    @*  @Html.HiddenFor(model => model.IsAzienda)   *@
+    @Html.HiddenFor(model => model.IsAzienda)
+
+    <h3>Dati Utente</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username)
+        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", placeholder = "Username" } })
+        @Html.ValidationMessageFor(model => model.Username)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email)
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
 
     <button type="submit" class="btn btn-default">Registra</button>
 }

@@ -13,5 +13,8 @@ namespace Frelsex.Models
         public DbSet<Spedizione> Spedizioni { get; set; }
         public DbSet<AggiornamentoSpedizione> AggiornamentiSpedizione { get; set; }
 
+        public DbSet<Utente> Utenti { get; set; }
+        public DbSet<Ruolo> Ruoli { get; set; }
+        public DbSet<UtenteRuolo> UtentiRuoli { get; set; }
     }
 }

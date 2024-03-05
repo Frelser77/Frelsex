@@ -8,10 +8,6 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
 @if (clientiPrivati.Any())
 {
     <h3>Clienti Privati</h3>
@@ -27,10 +23,9 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.CodiceFiscale)</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                <td class="d-flex gap-2">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID } , new {@class="nav-link"}) 
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "nav-link" })
                 </td>
             </tr>
         }
@@ -52,10 +47,10 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.PartitaIVA)</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                <td class="d-flex gap-2">
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "nav-link" })
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "nav-link" })
                 </td>
             </tr>
         }
