@@ -7,13 +7,13 @@ namespace Frelsex.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class UpdateSchemaAfterChanges : IMigrationMetadata
+    public sealed partial class Role : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateSchemaAfterChanges));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Role));
         
         string IMigrationMetadata.Id
         {
-            get { return "202403041542263_UpdateSchemaAfterChanges"; }
+            get { return "202403061550281_Role"; }
         }
         
         string IMigrationMetadata.Source

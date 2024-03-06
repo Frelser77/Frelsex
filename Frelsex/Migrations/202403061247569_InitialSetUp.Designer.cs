@@ -7,13 +7,13 @@ namespace Frelsex.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class NomeMigrazioneDescrittivo : IMigrationMetadata
+    public sealed partial class InitialSetUp : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NomeMigrazioneDescrittivo));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialSetUp));
         
         string IMigrationMetadata.Id
         {
-            get { return "202403041402564_NomeMigrazioneDescrittivo"; }
+            get { return "202403061247569_InitialSetUp"; }
         }
         
         string IMigrationMetadata.Source

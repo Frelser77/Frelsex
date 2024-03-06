@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Frelsex.Models
 {
     public class Ruolo
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Required]
-        [StringLength(256)] // Aggiustare in base alle specifiche del database
+        [StringLength(255)]
         public string Nome { get; set; }
 
-        // Navigational property per relazione con UtentiRuoli
-        public virtual ICollection<UtenteRuolo> UtentiRuoli { get; set; }
+        public virtual ICollection<Utente> Utenti { get; set; }
     }
 }

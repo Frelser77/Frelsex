@@ -52,7 +52,28 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.4\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -127,45 +148,33 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AggiornamentiSpedizioneController.cs" />
     <Compile Include="Controllers\ClientiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RegistrazioneController.cs" />
     <Compile Include="Controllers\SpedizioniController.cs" />
     <Compile Include="Controllers\UtentiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202403041307049_InitialCreate.cs" />
-    <Compile Include="Migrations\202403041307049_InitialCreate.designer.cs">
-      <DependentUpon>202403041307049_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202403061247569_InitialSetUp.cs" />
+    <Compile Include="Migrations\202403061247569_InitialSetUp.designer.cs">
+      <DependentUpon>202403061247569_InitialSetUp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202403041402564_NomeMigrazioneDescrittivo.cs" />
-    <Compile Include="Migrations\202403041402564_NomeMigrazioneDescrittivo.designer.cs">
-      <DependentUpon>202403041402564_NomeMigrazioneDescrittivo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403041542263_UpdateSchemaAfterChanges.cs" />
-    <Compile Include="Migrations\202403041542263_UpdateSchemaAfterChanges.designer.cs">
-      <DependentUpon>202403041542263_UpdateSchemaAfterChanges.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403051213485_AdjustUserClienteRelationship.cs" />
-    <Compile Include="Migrations\202403051213485_AdjustUserClienteRelationship.designer.cs">
-      <DependentUpon>202403051213485_AdjustUserClienteRelationship.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403051546570_Update.cs" />
-    <Compile Include="Migrations\202403051546570_Update.designer.cs">
-      <DependentUpon>202403051546570_Update.cs</DependentUpon>
+    <Compile Include="Migrations\202403061550281_Role.cs" />
+    <Compile Include="Migrations\202403061550281_Role.designer.cs">
+      <DependentUpon>202403061550281_Role.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AggiornamentoSpedizione.cs" />
     <Compile Include="Models\Cliente.cs" />
-    <Compile Include="Models\ClienteUtenteViewModel.cs" />
     <Compile Include="Models\FrelsexDbContext.cs" />
+    <Compile Include="Models\MyLogin.cs" />
     <Compile Include="Models\MyRole.cs" />
     <Compile Include="Models\Ruolo.cs" />
     <Compile Include="Models\Spedizione.cs" />
+    <Compile Include="Models\StatoSpedizione.cs" />
     <Compile Include="Models\Utente.cs" />
-    <Compile Include="Models\UtenteRuolo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,10 +243,12 @@
     <Content Include="Views\Clienti\Index.cshtml" />
     <Content Include="Views\Clienti\Details.cshtml" />
     <Content Include="Views\Clienti\Edit.cshtml" />
-    <Content Include="Views\Registrazione\Create.cshtml" />
     <Content Include="Views\Utenti\Index.cshtml" />
     <Content Include="Views\Utenti\Details.cshtml" />
     <Content Include="Views\Utenti\Edit.cshtml" />
+    <Content Include="Views\Utenti\Delete.cshtml" />
+    <Content Include="Views\Utenti\Create.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -270,20 +281,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202403041307049_InitialCreate.resx">
-      <DependentUpon>202403041307049_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202403061247569_InitialSetUp.resx">
+      <DependentUpon>202403061247569_InitialSetUp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403041402564_NomeMigrazioneDescrittivo.resx">
-      <DependentUpon>202403041402564_NomeMigrazioneDescrittivo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403041542263_UpdateSchemaAfterChanges.resx">
-      <DependentUpon>202403041542263_UpdateSchemaAfterChanges.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403051213485_AdjustUserClienteRelationship.resx">
-      <DependentUpon>202403051213485_AdjustUserClienteRelationship.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403051546570_Update.resx">
-      <DependentUpon>202403051546570_Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202403061550281_Role.resx">
+      <DependentUpon>202403061550281_Role.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

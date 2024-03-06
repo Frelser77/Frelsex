@@ -37,7 +37,7 @@ namespace Frelsex.Controllers
         public ActionResult Create()
         {
             ViewBag.IDCliente = new SelectList(db.Clienti, "ID", "Nome");
-            return View(new Spedizione());
+            return View(new Spedizione { DataSpedizione = DateTime.Today, DataConsegnaPrevista = DateTime.Today.AddDays(3) });
         }
 
         // POST: Spedizioni/Create
@@ -49,9 +49,7 @@ namespace Frelsex.Controllers
             {
                 spedizione.NumeroIdentificativo = GeneraNumeroIdentificativo();
                 spedizione.CostoSpedizione = CalcolaCostoSpedizione(spedizione.Peso);
-                spedizione.DataSpedizione = DateTime.Today;
-                spedizione.DataConsegnaPrevista = DateTime.Today.AddDays(3);
-                spedizione.Stato = "In Transito";
+                spedizione.Stato = StatoSpedizione.inTransito.ToString();
 
                 db.Spedizioni.Add(spedizione);
                 db.SaveChanges();

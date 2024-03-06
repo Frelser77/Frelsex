@@ -2,8 +2,18 @@
 
 @{
     ViewBag.Title = "Registra Cliente";
+    
 }
 
+
+@{
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
@@ -37,7 +47,7 @@
         @Html.ValidationMessageFor(model => model.PartitaIVA)
     </div>
 
-    @*  @Html.HiddenFor(model => model.IsAzienda)   *@
+     @Html.HiddenFor(model => model.IsAzienda)   
 
     <button type="submit" class="btn btn-default">Registra</button>
 }

@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Frelsex.Models
 {
     public class Utente
     {
-        [Key, ForeignKey("Cliente")]
-        [ScaffoldColumn(false)]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Required]
@@ -21,17 +20,15 @@ namespace Frelsex.Models
         [StringLength(50)]
         public string Email { get; set; }
 
-        [ScaffoldColumn(false)]
+        [Required]
         public bool IsAdmin { get; set; }
 
-        [ScaffoldColumn(false)]
+        [ForeignKey("Cliente")]
         public int? ClienteID { get; set; }
-
-        [ScaffoldColumn(false)]
         public virtual Cliente Cliente { get; set; }
 
-        [ScaffoldColumn(false)]
-        // Navigational property per relazione con UtentiRuoli
-        public virtual ICollection<UtenteRuolo> UtentiRuoli { get; set; }
+        [ForeignKey("Ruolo")]
+        public int RuoloID { get; set; }
+        public virtual Ruolo Ruolo { get; set; }
     }
 }

@@ -6,6 +6,21 @@
     var aziende = Model.Where(c => c.IsAzienda).ToList();
 }
 
+@{
+if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+
 <h2>Index</h2>
 
 @if (clientiPrivati.Any())
@@ -24,7 +39,7 @@
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.CodiceFiscale)</td>
                 <td class="d-flex gap-2">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID } , new {@class="nav-link"}) 
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "nav-link" })
                     @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "nav-link" })
                 </td>
             </tr>

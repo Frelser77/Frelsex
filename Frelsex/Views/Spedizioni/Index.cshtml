@@ -4,6 +4,21 @@
     ViewBag.Title = "Index";
 }
 
+@{
+if (TempData["SuccessMessage"] != null)
+{
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+
 <h2>Index</h2>
 
 <p>
@@ -44,44 +59,45 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDCliente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumeroIdentificativo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataSpedizione)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Peso)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CittàDestinataria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IndirizzoDestinatario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NominativoDestinatario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CostoSpedizione)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataConsegnaPrevista)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stato)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroIdentificativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataSpedizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Peso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CittàDestinataria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndirizzoDestinatario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NominativoDestinatario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoSpedizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataConsegnaPrevista)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stato)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>

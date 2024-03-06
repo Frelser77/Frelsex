@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Frelsex.Controllers
 {
+    /*[Authorize(Roles = "Utente,Admin")]*/
     public class ClientiController : Controller
     {
         private readonly FrelsexDbContext db = new FrelsexDbContext();
@@ -23,42 +24,37 @@ namespace Frelsex.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Clienti.Find(id);
+            Cliente cliente = db.Clienti.Include(c => c.Spedizioni) // Include le spedizioni se necessario
+                                        .SingleOrDefault(c => c.ID == id);
             if (cliente == null)
             {
                 return HttpNotFound();
             }
             return View(cliente);
         }
-        /*
-        [NonAction]
+
         // GET: Clienti/Create
         public ActionResult Create()
         {
+            // Prepara eventuali ViewBag per dropdown (se necessario)
+            ViewBag.IsAzienda = new SelectList(new[] { new { Value = false, Text = "Azienda" }, new { Value = true, Text = "Privato" } }, "Value", "Text");
 
-            return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La creazione non è permessa da qui.");
+            return View();
         }
-        */
 
         // POST: Clienti/Create
-        [NonAction]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nome,CodiceFiscale,PartitaIVA,IsAzienda")] Cliente cliente)
         {
-
             if (ModelState.IsValid)
             {
                 db.Clienti.Add(cliente);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(cliente);
-
-            /*return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La creazione non è permessa da qui.");*/
         }
-
 
         // GET: Clienti/Edit/5
         public ActionResult Edit(int? id)
@@ -72,6 +68,7 @@ namespace Frelsex.Controllers
             {
                 return HttpNotFound();
             }
+            // Prepara eventuali ViewBag per dropdown (se necessario)
             return View(cliente);
         }
 
@@ -110,8 +107,17 @@ namespace Frelsex.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Cliente cliente = db.Clienti.Find(id);
+            // Aggiungi qui la logica per gestire le dipendenze, se necessario
             db.Clienti.Remove(cliente);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException)
+            {
+                // Gestisci l'errore (es. mostrando un messaggio all'utente)
+                return RedirectToAction("DeleteFailed");
+            }
             return RedirectToAction("Index");
         }
 

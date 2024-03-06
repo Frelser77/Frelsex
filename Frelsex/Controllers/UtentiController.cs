@@ -1,4 +1,6 @@
 ﻿using Frelsex.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -18,32 +20,32 @@ namespace Frelsex.Controllers
             return View(utenti.ToList());
         }
 
-        /*
-        [NonAction]
-        // GET: Utenti/Create
+
+        // GET: Clienti/Create
+        [Authorize(Roles = "Utente")] // Assicurati che questo sia il nome del ruolo corretto
         public ActionResult Create()
         {
-
-            return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La creazione non è permessa da qui.");
+            // Qui presupponiamo che l'ID dell'utente sia lo stesso ID associato al ruolo di cliente
+            int userId = Convert.ToInt32(User.Identity.GetUserId()); // Utilizza il metodo appropriato per ottenere l'ID dell'utente loggato
+            var model = new Cliente { ID = userId };
+            return View(model);
         }
-        */
 
-        // POST: Utenti/Create
-        [NonAction]
+        // POST: Clienti/Create
         [HttpPost]
+        [Authorize(Roles = "Utente")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Username,Password,Email,IsAdmin")] Utente utente)
+        public ActionResult Create([Bind(Include = "Nome,CodiceFiscale,PartitaIVA,IsAzienda")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                db.Utenti.Add(utente);
+                int userId = Convert.ToInt32(User.Identity.GetUserId());
+                cliente.ID = userId; // Imposta l'ID dell'utente loggato come UtenteID del Cliente
+                db.Clienti.Add(cliente);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(utente);
-
-            /*return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La creazione non è permessa da qui.");*/
+            return View(cliente);
         }
 
         // GET: Utenti/Details/5
@@ -76,32 +78,61 @@ namespace Frelsex.Controllers
             return View(utente);
         }
 
-        // POST: Utenti/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Username,Password,Email,IsAdmin")] Utente utente)
+        public ActionResult Edit([Bind(Include = "ID,Username,Password,Email")] Utente utente)
         {
             if (ModelState.IsValid)
             {
-                // Applica la logica di hashing alla password, se modificata.
-                db.Entry(utente).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var utenteDaAggiornare = db.Utenti.Find(utente.ID);
+                if (utenteDaAggiornare != null)
+                {
+                    utenteDaAggiornare.Username = utente.Username;
+                    utenteDaAggiornare.Password = utente.Password; // Considera l'hashing della password
+                    utenteDaAggiornare.Email = utente.Email;
+
+                    // Non aggiornare RuoloID o IsAdmin qui, poiché non dovrebbero essere modificati
+
+                    db.Entry(utenteDaAggiornare).State = EntityState.Modified;
+                    db.SaveChanges(); // Questo salva effettivamente le modifiche nel database
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
             }
             return View(utente);
         }
 
-        [NonAction]
+
+        // GET: Utenti/Delete/5
         public ActionResult Delete(int? id)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La cancellazione non è permessa da qui.");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Utente utente = db.Utenti.Find(id);
+            if (utente == null)
+            {
+                return HttpNotFound();
+            }
+            return View(utente);
         }
 
-
-        [NonAction]
+        // POST: Utenti/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "La cancellazione non è permessa da qui.");
+            Utente utente = db.Utenti.Find(id);
+            if (utente != null)
+            {
+                db.Utenti.Remove(utente);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
 

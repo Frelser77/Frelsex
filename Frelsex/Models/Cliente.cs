@@ -1,31 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Frelsex.Models
 {
     public class Cliente
     {
         [Key]
-        [ScaffoldColumn(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        [Required(ErrorMessage = "Il nome è obbligatorio.")]
-        [StringLength(60, ErrorMessage = "La lunghezza del nome non può superare i 255 caratteri.")]
-        [Display(Name = "Nome Cliente")]
+
+        [Required]
+        [StringLength(255)]
         public string Nome { get; set; }
 
-        [StringLength(16, ErrorMessage = "La lunghezza del codice fiscale non può superare i 16 caratteri.")]
-        [Display(Name = "Codice Fiscale")]
+        [StringLength(16)]
         public string CodiceFiscale { get; set; }
 
-        [StringLength(11, ErrorMessage = "La lunghezza della partita IVA non può superare gli 11 caratteri.")]
-        [Display(Name = "Partita IVA")]
+        [StringLength(11)]
         public string PartitaIVA { get; set; }
 
-        [Required(ErrorMessage = "La specifica del tipo di cliente è obbligatoria.")]
-        [Display(Name = "Account")]
+        [Required]
         public bool IsAzienda { get; set; }
 
-        // Proprietà di navigazione inversa per Utente
+        // Navigational property per relazione uno-a-uno con Utente
         public virtual Utente Utente { get; set; }
+
+        // Navigational property per relazione uno-a-molti con Spedizione
+        public virtual ICollection<Spedizione> Spedizioni { get; set; }
     }
 
 }

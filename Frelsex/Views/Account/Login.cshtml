@@ -1,0 +1,26 @@
+﻿@model Frelsex.Models.MyLogin
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UsernameOrEmail)
+        @Html.TextBoxFor(m => m.UsernameOrEmail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.UsernameOrEmail)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+
+    <button type="submit" class="btn btn-default">Login</button>
+}

@@ -39,14 +39,14 @@ namespace Frelsex.Models
             {
                 using (FrelsexDbContext context = new FrelsexDbContext())
                 {
-                    string[] ruoliUtente = context.Utenti.Include("UtentiRuoli.Ruolo").FirstOrDefault(u => u.Username == username)?.UtentiRuoli.Select(ur => ur.Ruolo.Nome).ToArray();
+                    string ruoloUtente = context.Utenti.Include("Ruolo").FirstOrDefault(u => u.Username == username)?.Ruolo.Nome;
 
-                    return ruoliUtente ?? new string[] { };
+                    return ruoloUtente != null ? new string[] { ruoloUtente } : new string[] { };
                 }
             }
             catch
             {
-                return null;
+                return new string[] { };
             }
         }
 
@@ -54,28 +54,19 @@ namespace Frelsex.Models
         {
             using (FrelsexDbContext context = new FrelsexDbContext())
             {
-                Ruolo ruolo = context.Ruoli.Include("UtentiRuoli.Utente").FirstOrDefault(r => r.Nome == roleName);
+                // Prendi tutti gli utenti che hanno un ruolo con il nome specificato.
+                var utenti = context.Utenti.Include("Ruolo").Where(u => u.Ruolo.Nome == roleName).Select(u => u.Username).ToArray();
 
-                if (ruolo != null)
-                {
-                    return ruolo.UtentiRuoli.Select(ur => ur.Utente.Username).ToArray();
-                }
+                return utenti;
             }
-            return new string[] { };
         }
 
         public override bool IsUserInRole(string username, string roleName)
         {
             using (FrelsexDbContext context = new FrelsexDbContext())
             {
-                Utente utente = context.Utenti.Include("UtentiRuoli.Ruolo").FirstOrDefault(u => u.Username == username);
-
-                if (utente != null)
-                {
-                    return utente.UtentiRuoli.Any(ur => ur.Ruolo.Nome == roleName);
-                }
+                return context.Utenti.Include("Ruolo").Any(u => u.Username == username && u.Ruolo.Nome == roleName);
             }
-            return false;
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
