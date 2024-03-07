@@ -165,6 +165,14 @@
     <Compile Include="Migrations\202403061550281_Role.designer.cs">
       <DependentUpon>202403061550281_Role.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403070112381_UpUtente-Cliente_ID.cs" />
+    <Compile Include="Migrations\202403070112381_UpUtente-Cliente_ID.designer.cs">
+      <DependentUpon>202403070112381_UpUtente-Cliente_ID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403070810175_UpdateMorning.cs" />
+    <Compile Include="Migrations\202403070810175_UpdateMorning.designer.cs">
+      <DependentUpon>202403070810175_UpdateMorning.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AggiornamentoSpedizione.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -172,6 +180,7 @@
     <Compile Include="Models\MyLogin.cs" />
     <Compile Include="Models\MyRole.cs" />
     <Compile Include="Models\Ruolo.cs" />
+    <Compile Include="Models\SearchSpedizione.cs" />
     <Compile Include="Models\Spedizione.cs" />
     <Compile Include="Models\StatoSpedizione.cs" />
     <Compile Include="Models\Utente.cs" />
@@ -249,6 +258,9 @@
     <Content Include="Views\Utenti\Delete.cshtml" />
     <Content Include="Views\Utenti\Create.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Spedizioni\SearchSpedizione.cshtml" />
+    <Content Include="Views\Spedizioni\SearchResults.cshtml" />
+    <Content Include="Views\Spedizioni\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -286,6 +298,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403061550281_Role.resx">
       <DependentUpon>202403061550281_Role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403070112381_UpUtente-Cliente_ID.resx">
+      <DependentUpon>202403070112381_UpUtente-Cliente_ID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403070810175_UpdateMorning.resx">
+      <DependentUpon>202403070810175_UpdateMorning.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

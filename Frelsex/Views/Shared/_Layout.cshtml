@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
@@ -11,25 +11,67 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Nome dell'applicazione", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("FrelsEX", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Attiva/Disattiva spostamento" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                    <!-- Mostra sempre Home e Informazioni -->
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Informazioni", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contatto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Spedizioni", "Index", "Spedizioni", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("AggiornamentiSpedizione", "Index", "AggiornamentiSpedizione", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Clienti", "Index", "Clienti", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Utenti", "Index", "Utenti", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Registrazione", "Create", "Utenti", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <!-- Se l'utente NON è loggato, mostra solo Registrazione e Login -->
+                        <li>@Html.ActionLink("Registrazione", "Create", "Utenti", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Accedi", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    else
+                    {
+                        <!-- Se l'utente è loggato, controlla il ruolo -->
+                        if (User.IsInRole("Admin"))
+                        {
+                            <!-- Se l'utente è Admin, mostra tutto tranne Registrazione e Login -->
+                            <li>@Html.ActionLink("Contatto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Clienti", "Index", "Clienti", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Utenti", "Index", "Utenti", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Spedizioni", "Index", "Spedizioni", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("AggiornamentiSpedizione", "Index", "AggiornamentiSpedizione", new { area = "" }, new { @class = "nav-link" })</li>
+                        }
+                        else if (User.IsInRole("Utente"))
+                        {
+                            <!-- Se l'utente ha il ruolo Utente, mostra solo Spedizioni e Aggiornamenti Spedizione -->
+                            <li>@Html.ActionLink("Spedizioni", "SearchSpedizione", "Spedizioni", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("AggiornamentiSpedizione", "Index", "AggiornamentiSpedizione", new { area = "" }, new { @class = "nav-link" })</li>
+                        }
+                        <!-- Logout è visibile a tutti gli utenti loggati -->
+                        <li>@Html.ActionLink("Esci", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+
+                    @* Gestione del benvenuto all'utente loggato *@
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                        if (authCookie != null)
+                        {
+                            var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                            var userData = authTicket.UserData.Split('|');
+                            var userId = userData[0]; // Assumendo che l'ID sia il primo elemento
+
+                            <li class="nav-item">
+                                <a href="@Url.Action("Details", "Utenti", new { id = userId })" class="nav-link">
+                                    Benvenuto, @User.Identity.Name
+                                </a>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
     </nav>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

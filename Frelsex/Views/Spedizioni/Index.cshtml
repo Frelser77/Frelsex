@@ -1,103 +1,55 @@
 ﻿@model IEnumerable<Frelsex.Models.Spedizione>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Spedizioni";
 }
 
-@{
-if (TempData["SuccessMessage"] != null)
+@if (TempData["SuccessMessage"] != null)
 {
-        <div class="alert alert-success">
-            @TempData["SuccessMessage"]
-        </div>
-    }
-    if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger">
-            @TempData["ErrorMessage"]
-        </div>
-    }
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
 }
 
-<h2>Index</h2>
+<h2>Elenco Spedizioni</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crea Nuova Spedizione", "Create", null, new { @class = "btn btn-primary" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IDCliente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumeroIdentificativo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataSpedizione)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Peso)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CittàDestinataria)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IndirizzoDestinatario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NominativoDestinatario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CostoSpedizione)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataConsegnaPrevista)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Stato)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDCliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroIdentificativo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataSpedizione)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Peso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CittàDestinataria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IndirizzoDestinatario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NominativoDestinatario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CostoSpedizione)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataConsegnaPrevista)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stato)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
-    }
+    <div>@Html.ActionLink("Spedizioni", "SearchSpedizione", "Spedizioni", new { area = "" }, new { @class = "btn btn-sm btn-outline-secondary my-2" })</div>
 
-</table>
+
+
+@foreach (var item in Model)
+{
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <h5 class="card-title">Spedizione @item.NumeroIdentificativo</h5>
+                    <p class="card-text">
+                        <strong>Cliente ID:</strong> @item.IDCliente<br>
+                        <strong>Data Spedizione:</strong> @item.DataSpedizione.ToShortDateString()<br>
+                        <strong>Peso:</strong> @item.Peso<br>
+                        <strong>Città Destinataria:</strong> @item.CittàDestinataria<br>
+                        <strong>Indirizzo Destinatario:</strong> @item.IndirizzoDestinatario<br>
+                        <strong>Nominativo Destinatario:</strong> @item.NominativoDestinatario<br>
+                        <strong>Costo Spedizione:</strong> @item.CostoSpedizione<br>
+                        <strong>Data Consegna Prevista:</strong> @item.DataConsegnaPrevista.ToShortDateString()<br>
+                        <strong>Stato:</strong> @item.Stato
+                    </p>
+                    <a href="@Url.Action("Edit", "Spedizioni", new { id = item.ID })" class="btn btn-primary">Modifica</a>
+                    <a href="@Url.Action("Details", "Spedizioni", new { id = item.ID })" class="btn btn-secondary">Dettagli</a>
+                    <a href="@Url.Action("Delete", "Spedizioni", new { id = item.ID })" class="btn btn-danger">Elimina</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

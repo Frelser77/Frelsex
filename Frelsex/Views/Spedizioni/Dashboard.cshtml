@@ -1,0 +1,70 @@
+﻿@model Frelsex.Models.Spedizione
+
+@{
+    ViewBag.Title = "Dashboard Spedizioni";
+}
+
+<h2>Dashboard Spedizioni</h2>
+
+<div id="btnSpedizioniOggi" class="btn btn-sm btn-outline-info">Spedizioni in consegna oggi</div>
+<div id="btnSpedizioniInAttesa" class="btn btn-sm btn-outline-info">Numero spedizioni in attesa</div>
+<div id="btnSpedizioniPerCitta" class="btn btn-sm btn-outline-info">Spedizioni per città</div>
+
+<div id="results"></div>
+
+@section Scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSpedizioniOggi").click(function () {
+            $.ajax({
+                url: '@Url.Action("SpedizioniInConsegnaOggi", "Spedizioni")',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.length === 0) {
+                        $('#results').html('<p>Nessuna spedizione in consegna oggi.</p>');
+                    } else {
+                        $('#results').html(JSON.stringify(data));
+                    }
+                }
+            });
+        });
+
+        $("#btnSpedizioniInAttesa").click(function () {
+            $.ajax({
+                url: '@Url.Action("NumeroSpedizioniInAttesa", "Spedizioni")',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.count === 0) {
+                        $('#results').html('<p>Nessuna spedizione in attesa.</p>');
+                    } else {
+                        $('#results').html("Numero spedizioni in attesa: " + data.count);
+                    }
+                }
+            });
+        });
+
+        $("#btnSpedizioniPerCitta").click(function () {
+            $.ajax({
+                url: '@Url.Action("SpedizioniPerCitta", "Spedizioni")',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.length === 0) {
+                        $('#results').html('<p>Nessuna spedizione per le città richieste.</p>');
+                    } else {
+                        var html = "<ul>";
+                        $.each(data, function (index, item) {
+                            html += "<li>" + item.Città + ": " + item.Count + "</li>";
+                        });
+                        html += "</ul>";
+                        $('#results').html(html);
+                    }
+                }
+            });
+        });
+    });
+    </script>
+
+}

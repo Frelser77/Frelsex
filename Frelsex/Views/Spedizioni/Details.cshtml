@@ -1,15 +1,15 @@
 ﻿@model Frelsex.Models.Spedizione
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Dettagli Spedizione";
 }
 
-<h2>Details</h2>
+<h2>Dettagli Spedizione</h2>
 
 <div>
     <h4>Spedizione</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="row">
         <dt>
             @Html.DisplayNameFor(model => model.IDCliente)
         </dt>
@@ -92,7 +92,35 @@
 
     </dl>
 </div>
+
+<div class="mt-4">
+    <h2>Storico Aggiornamenti</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data e Ora</th>
+                    <th>Stato</th>
+                    <th>Luogo</th>
+                    <th>Descrizione</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var aggiornamento in Model.AggiornamentiSpedizione.OrderBy(a => a.DataOraAggiornamento))
+                {
+                    <tr>
+                        <td>@aggiornamento.DataOraAggiornamento.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@aggiornamento.Stato</td>
+                        <td>@aggiornamento.Luogo</td>
+                        <td>@aggiornamento.Descrizione</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modifica", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" }) 
+    @Html.ActionLink("Torna alla lista", "Index", null, new { @class = "btn btn-secondary" })
 </p>

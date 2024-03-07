@@ -37,18 +37,23 @@ namespace Frelsex.Models
         {
             try
             {
-                using (FrelsexDbContext context = new FrelsexDbContext())
+                using (var context = new FrelsexDbContext())
                 {
-                    string ruoloUtente = context.Utenti.Include("Ruolo").FirstOrDefault(u => u.Username == username)?.Ruolo.Nome;
+                    var ruoloUtente = context.Utenti
+                                             .Where(u => u.Username == username)
+                                             .Select(u => u.Ruolo.Nome)
+                                             .SingleOrDefault();
 
                     return ruoloUtente != null ? new string[] { ruoloUtente } : new string[] { };
                 }
             }
             catch
             {
+                // Considera di loggare l'eccezione
                 return new string[] { };
             }
         }
+
 
         public override string[] GetUsersInRole(string roleName)
         {

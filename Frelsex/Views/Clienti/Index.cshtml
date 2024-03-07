@@ -7,7 +7,7 @@
 }
 
 @{
-if (TempData["SuccessMessage"] != null)
+    if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success">
             @TempData["SuccessMessage"]
@@ -26,53 +26,60 @@ if (TempData["SuccessMessage"] != null)
 @if (clientiPrivati.Any())
 {
     <h3>Clienti Privati</h3>
-    <table class="table">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Nome)</th>
-            <th>@Html.DisplayNameFor(model => model.CodiceFiscale)</th>
-            <th></th>
-        </tr>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                    <th>@Html.DisplayNameFor(model => model.CodiceFiscale)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in clientiPrivati)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CodiceFiscale)</td>
+                    <td class="d-flex gap-2">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "nav-link" })
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "nav-link" })
+                    </td>
+                </tr>
+            }
 
-        @foreach (var item in clientiPrivati)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                <td>@Html.DisplayFor(modelItem => item.CodiceFiscale)</td>
-                <td class="d-flex gap-2">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "nav-link" })
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "nav-link" })
-                </td>
-            </tr>
-        }
-    </table>
+        </table>
+    </div>
 }
 
 @if (aziende.Any())
 {
     <h3>Aziende</h3>
-    <table class="table">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Nome)</th>
-            <th>@Html.DisplayNameFor(model => model.PartitaIVA)</th>
-            <th></th>
-        </tr>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                    <th>@Html.DisplayNameFor(model => model.PartitaIVA)</th>
+                    <th></th>
+                </tr>
 
-        @foreach (var item in aziende)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                <td>@Html.DisplayFor(modelItem => item.PartitaIVA)</td>
-                <td class="d-flex gap-2">
+                @foreach (var item in aziende)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PartitaIVA)</td>
+                        <td class="d-flex gap-2">
 
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "nav-link" })
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "nav-link" })
-                </td>
-            </tr>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-outline-secondary" })
+                            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-outline-secondary" })
+                        </td>
+                    </tr>
+                }
+        </table>
+</div>
         }
-    </table>
-}
 
-@if (!clientiPrivati.Any() && !aziende.Any())
-{
-    <p>Non ci sono clienti da mostrare.</p>
-}
+        @if (!clientiPrivati.Any() && !aziende.Any())
+        {
+            <p>Non ci sono clienti da mostrare.</p>
+        }

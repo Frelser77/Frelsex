@@ -1,6 +1,5 @@
 ﻿using Frelsex.Models;
-using Microsoft.AspNet.Identity;
-using System;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -21,32 +20,58 @@ namespace Frelsex.Controllers
         }
 
 
-        // GET: Clienti/Create
-        [Authorize(Roles = "Utente")] // Assicurati che questo sia il nome del ruolo corretto
+        // GET: Utenti/Create
         public ActionResult Create()
         {
-            // Qui presupponiamo che l'ID dell'utente sia lo stesso ID associato al ruolo di cliente
-            int userId = Convert.ToInt32(User.Identity.GetUserId()); // Utilizza il metodo appropriato per ottenere l'ID dell'utente loggato
-            var model = new Cliente { ID = userId };
-            return View(model);
+            if (User.Identity.IsAuthenticated)
+            {
+                // Verifica se l'utente attualmente loggato è un Admin
+                Utente utenteLoggato = db.Utenti.FirstOrDefault(u => u.Username == User.Identity.Name);
+                if (utenteLoggato == null || !utenteLoggato.IsAdmin)
+                {
+                    // Se l'utente non è un admin o non è trovato nel db, non è autorizzato a creare un nuovo utente
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Non sei autorizzato a creare nuovi utenti.");
+                }
+            }
+
+            return View();
         }
 
-        // POST: Clienti/Create
+        // POST: Utenti/Create
         [HttpPost]
-        [Authorize(Roles = "Utente")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nome,CodiceFiscale,PartitaIVA,IsAzienda")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "Username,Password,Email")] Utente utente)
         {
+            string confermaPassword = Request.Form["ConfermaPassword"];
+
             if (ModelState.IsValid)
             {
-                int userId = Convert.ToInt32(User.Identity.GetUserId());
-                cliente.ID = userId; // Imposta l'ID dell'utente loggato come UtenteID del Cliente
-                db.Clienti.Add(cliente);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                // Controllo password
+                if (utente.Password != confermaPassword)
+                {
+                    ModelState.AddModelError("ConfermaPassword", "Le password non coincidono.");
+                    return View(utente);
+                }
+
+                utente.IsAdmin = false;
+                utente.RuoloID = 1;
+
+                db.Utenti.Add(utente);
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbException)
+                {
+                    ModelState.AddModelError("", "Si è verificato un errore durante la registrazione. Si prega di riprovare.");
+                    return View(utente);
+                }
             }
-            return View(cliente);
+
+            return View(utente);
         }
+
 
         // GET: Utenti/Details/5
         public ActionResult Details(int? id)

@@ -24,7 +24,7 @@ namespace Frelsex.Models
         public bool IsAdmin { get; set; }
 
         [ForeignKey("Cliente")]
-        public int? ClienteID { get; set; }
+        public int? Cliente_ID { get; set; }
         public virtual Cliente Cliente { get; set; }
 
         [ForeignKey("Ruolo")]

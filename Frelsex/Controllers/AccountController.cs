@@ -27,17 +27,25 @@ namespace Frelsex.Controllers
                 using (FrelsexDbContext db = new FrelsexDbContext())
                 {
                     Utente user = db.Utenti.FirstOrDefault(u => (u.Username == model.UsernameOrEmail || u.Email == model.UsernameOrEmail)
-                                                        && u.Password == model.Password);
+                                                      && u.Password == model.Password);
 
                     if (user != null)
                     {
                         // Ottieni i ruoli per l'utente
                         string[] roles = db.Ruoli.Where(r => r.Utenti.Any(u => u.ID == user.ID)).Select(r => r.Nome).ToArray();
 
+                        // Combina l'ID dell'utente e i ruoli in una stringa di UserData
+                        string userData = $"{user.ID}|{string.Join(",", roles)}";
+
                         // Crea il ticket di autenticazione
                         FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
-                            1, user.Username, DateTime.Now, DateTime.Now.AddMinutes(20), false, string.Join(",", roles));
-
+                            1, // version
+                            user.Username, // username
+                            DateTime.Now, // issue date
+                            DateTime.Now.AddMinutes(60), // expiration
+                            false, // persistent
+                            userData, // user data
+                            FormsAuthentication.FormsCookiePath);
 
                         string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                         HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
@@ -55,6 +63,8 @@ namespace Frelsex.Controllers
             // Se siamo arrivati fin qui, qualcosa è fallito, quindi ri-mostra il form
             return View(model);
         }
+
+
 
         // Metodo per il Logout
         [Authorize]

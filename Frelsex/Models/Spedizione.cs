@@ -40,7 +40,7 @@ namespace Frelsex.Models
         public DateTime DataConsegnaPrevista { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(70)]
         public string Stato { get; set; }
 
         [ForeignKey("Cliente")]

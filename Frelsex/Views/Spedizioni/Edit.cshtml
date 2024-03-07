@@ -53,7 +53,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Peso, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Peso, new { htmlAttributes = new { @class = "form-control" }, @type = "number", step = "0.01" })}
+                @Html.EditorFor(model => model.Peso, new { htmlAttributes = new { @class = "form-control" }, @type = "number", step = "0.01" })
                 @Html.ValidationMessageFor(model => model.Peso, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -101,7 +101,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Stato, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Stato, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Stato, new SelectList(Enum.GetValues(typeof(Frelsex.Models.StatoSpedizione))), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Stato, "", new { @class = "text-danger" })
             </div>
         </div>

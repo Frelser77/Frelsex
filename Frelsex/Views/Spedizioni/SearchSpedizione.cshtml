@@ -1,0 +1,13 @@
+﻿@model Frelsex.Models.SearchSpedizione
+
+
+@using (Html.BeginForm("SearchSpedizione", "Spedizioni", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.CodiceFiscaleOrPartitaIva)
+        @Html.TextBoxFor(m => m.CodiceFiscaleOrPartitaIva, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-outline-primary">Cerca</button>
+}
+
+
